@@ -57,13 +57,20 @@ class TodoWidget extends StatelessWidget {
                         todo.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: todo.isCompleted ? Colors.white60 : Colors.white ,
+                          decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
                           fontSize: 24
                         ),
                       ),
                       SizedBox(height: 4,),
                       Container(
                         width: 200, 
-                        child: Text(todo.description)
+                        child: Text(
+                            todo.description,
+                            style: TextStyle(
+                              color: todo.isCompleted ? Colors.white30 : Colors.white,
+                            ),
+                          ),
                       ),
                     ],
                   ),
