@@ -11,16 +11,55 @@ class HomePage extends StatefulWidget {
 
 
 class _HomePageState extends State<HomePage> {
+  List<Todo> userTodos = [];
 
-  // TODO: Add state for classes
+  @override
+  void initState(){
+    loadTodos_TEST_MODE();
+    // loadTodos();
 
-  void handleCompletion(){
-    print("COMPLETION TODO!");
+  }
+  
+  void loadTodos_TEST_MODE(){
+    List<Todo> todos = [];
+    todos.add(Todo(title: "title 1", description: "description 1", dateCreated: DateTime.now()));
+    todos.add(Todo(title: "title 2", description: "description 2", dateCreated: DateTime.now().add(Duration(hours: 1))));
+    todos.add(Todo(title: "title 3", description: "description 3", dateCreated: DateTime.now().add(Duration(hours: 2))));
+    
+    setState(() {
+      userTodos = todos;
+    });
   }
 
-  void handleEdit(){
+  void loadTodos(){
+    print("loading Todos from shared_preference to state");
+  }
+
+  void saveTodos(){
+    print("saving todos from current state to shared_preference");
+  }
+
+  void handleCompletion(Todo todo){
+    print("COMPLETION TODO!" + todo.title);
+    int todoIndex = userTodos.indexOf(todo);
+
+    setState(() {
+      userTodos[todoIndex] = Todo(title: todo.title, description: todo.description, dateCreated: todo.dateCreated, isCompleted: !todo.isCompleted);
+      saveTodos();
+    });
+  }
+
+  void handleEdit(Todo todo, String title, String description){
     print("EDIT TODO!");
+    int todoIndex = userTodos.indexOf(todo);
+
+    setState(() {
+      userTodos[todoIndex] = Todo(title: title, description: description, dateCreated: todo.dateCreated, isCompleted: todo.isCompleted);
+      saveTodos();
+    });
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +70,10 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: <Widget>[
           Column(
-            children: <Widget>[
-              TodoWidget(
-                todo: Todo(title: "Task 1", description: "This is a description.", dateCreated: DateTime.now(),),
-                onMarkComplete: handleCompletion,
-                onEditClick: this.handleEdit,
-              ),
-            ],
+            children: userTodos.map<TodoWidget>((todo){
+                return TodoWidget(todo: todo, onMarkComplete: handleCompletion, onEditClick: handleEdit);
+              }).toList()
           )
-          // ExampleWidget(
-          //   exampleVar: "My Example Var",
-          // ),
-          // ExampleWidget(),
         ],
       ),
     );

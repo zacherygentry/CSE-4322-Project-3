@@ -4,8 +4,10 @@ import '../models/Todo.dart';
 
 class TodoWidget extends StatelessWidget {
   final Todo todo;
-  final VoidCallback onEditClick;
-  final VoidCallback onMarkComplete;
+  final Function(Todo, String, String) onEditClick;
+  final Function(Todo) onMarkComplete;
+
+  
   const TodoWidget({
     this.todo,
     this.onEditClick,
@@ -28,7 +30,7 @@ class TodoWidget extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(right: 24),
                   child: InkResponse(
-                    onTap: onMarkComplete,
+                    onTap: (){onMarkComplete(todo);},
                     radius: 24,
                     child: Container(
                       width: 32,
@@ -66,7 +68,7 @@ class TodoWidget extends StatelessWidget {
                 ),
                 
                 InkWell(
-                  onTap: this.onEditClick,
+                  onTap: (){this.onEditClick(todo, todo.title, todo.description);},
                   child: Container(
                     width: 52,
                     height: 48,
