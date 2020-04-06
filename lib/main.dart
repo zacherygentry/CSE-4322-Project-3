@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/constants.dart';
-import 'package:todo_list/views/HomePage.dart';
+import 'package:todo_list/views/TabScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Constants.APP_TITLE,
       theme: ThemeData.dark(),
-      home: HomePage(),
+      home: TabScreen(),
     );
   }
 }
