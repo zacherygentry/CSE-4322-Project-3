@@ -7,11 +7,13 @@ class TodoWidget extends StatelessWidget {
   final Function(Todo, String, String) onEditClick;
   final Function(Todo) onMarkComplete;
 
-  
+
   const TodoWidget({
     this.todo,
     this.onEditClick,
-    this.onMarkComplete});
+    this.onMarkComplete}
+  );
+
 
   @override
   Widget build(BuildContext context) {
