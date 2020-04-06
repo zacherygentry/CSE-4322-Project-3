@@ -30,6 +30,9 @@
 .pub/
 /build/
 
+#Rahme added: my need to remove
+pubspec.lock
+
 # Web related
 lib/generated_plugin_registrant.dart
 
