@@ -168,21 +168,16 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Constants.HOMEPAGE_TITLE),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Column(
-              children: userTodos.map<TodoWidget>((todo) {
-            return TodoWidget(
-                todo: todo,
-                onMarkComplete: handleCompletion,
-                onEditClick: handleEdit);
-          }).toList())
-        ],
-      ),
-      );
+    return ListView(
+      children: <Widget>[
+        Column(
+            children: userTodos.map<TodoWidget>((todo) {
+          return TodoWidget(
+              todo: todo,
+              onMarkComplete: handleCompletion,
+              onEditClick: handleEdit);
+        }).toList())
+      ],
+    );
   }
 }

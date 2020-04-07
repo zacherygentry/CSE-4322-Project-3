@@ -22,7 +22,7 @@ class TabScreenState extends State<TabScreen> {
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
-          title: Text(Constants.APP_TITLE),
+          title: Text(Constants.HOMEPAGE_TITLE),
         ),
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
