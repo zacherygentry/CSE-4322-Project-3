@@ -68,11 +68,114 @@ class _HomePageState extends State<HomePage> {
     showEditBottomSheet(context, todo, todoIndex);
   }
 
+  void handleAdd(BuildContext context){
+    print("Adding item");
+    DateTime dateCreated = DateTime.now();
+    TextEditingController titleInputController = new TextEditingController();
+    TextEditingController descriptionInputController = new TextEditingController();
+    descriptionInputController.text = "";
+
+    showModalBottomSheet(
+      context: context, 
+      isScrollControlled: true,
+      builder: (BuildContext context){
+        return SingleChildScrollView(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            top: 36,
+            left: 32,
+            right: 32),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(bottom: 24.0),
+                child: TextField(
+                  controller: titleInputController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Title",
+                  ),
+                  autofocus: true,
+                  onSubmitted: (newVal) {
+                    // user pressed enter on Title textfield
+                    if(titleInputController.text.length > 0){
+                      setState(() {
+                        userTodos.add(
+                          Todo(
+                            title: titleInputController.text,
+                            description: descriptionInputController.text,
+                            dateCreated: dateCreated
+                          )
+                      );
+                      saveTodos();
+                      Navigator.pop(context); // close the showModalBottomSheet widget
+                      });
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: TextField(
+                  controller: descriptionInputController, // holds the text
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Description",
+                  ),
+                  onSubmitted: (newVal) {
+                    // user pressed enter on Title textfield
+                    if(titleInputController.text.length > 0){
+                      setState(() {
+                        userTodos.add(
+                          Todo(
+                            title: titleInputController.text,
+                            description: descriptionInputController.text,
+                            dateCreated: dateCreated
+                          )
+                      );
+                      saveTodos();
+                      Navigator.pop(context); // close the showModalBottomSheet widget
+                      });
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    child: Icon(Icons.arrow_right, size: 36),
+                    color: Colors.greenAccent,
+                    onPressed: () {
+                      if(titleInputController.text.length > 0){
+                        setState(() {
+                          userTodos.add(
+                            Todo(
+                              title: titleInputController.text,
+                              description: descriptionInputController.text,
+                              dateCreated: dateCreated
+                            )
+                          );
+                          saveTodos();
+                          Navigator.pop(context); // close the showModalBottomSheet widget
+                        });
+                      }
+                    },
+                  )),
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
+
   void showEditBottomSheet(context, Todo todo, int todoIndex) {
     TextEditingController titleInputController = new TextEditingController();
     TextEditingController descriptionInputController = new TextEditingController();
     titleInputController.text = todo.title;
-    descriptionInputController.text = todo.title;
+    descriptionInputController.text = todo.description;
 
     // Making a new widget for this takes time. TODO for a later date :p
     showModalBottomSheet(
@@ -167,13 +270,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Scaffold(
+      body: ListView(
       children: userTodos.map<TodoWidget>((todo) {
-          return TodoWidget(
-              todo: todo,
-              onMarkComplete: handleCompletion,
-              onEditClick: handleEdit);
+        return TodoWidget(
+          todo: todo,
+          onMarkComplete: handleCompletion,
+          onEditClick: handleEdit);
         }).toList(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          handleAdd(context);
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).accentColor,
+      ),
     );
   }
+  //   return 
+  //   );
+  // }
 }
