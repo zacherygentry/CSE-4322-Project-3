@@ -69,12 +69,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showEditBottomSheet(context, Todo todo, int todoIndex) {
-    print(todo);
     TextEditingController titleInputController = new TextEditingController();
-    TextEditingController descriptionInputController =
-        new TextEditingController();
+    TextEditingController descriptionInputController = new TextEditingController();
     titleInputController.text = todo.title;
     descriptionInputController.text = todo.title;
+
     // Making a new widget for this takes time. TODO for a later date :p
     showModalBottomSheet(
       context: context,
@@ -83,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         return SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+                bottom: MediaQuery.of(buildContext).viewInsets.bottom,
                 top: 36,
                 left: 32,
                 right: 32),
@@ -108,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                             isCompleted: todo.isCompleted);
                         saveTodos();
                         Navigator.pop(
-                            context); // close the showModalBottomSheet widget
+                            buildContext); // close the showModalBottomSheet widget
                       });
                     },
                   ),
@@ -132,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                             isCompleted: todo.isCompleted);
                         saveTodos();
                         Navigator.pop(
-                            context); // close the showModalBottomSheet widget
+                            buildContext); // close the showModalBottomSheet widget
                       });
                     },
                   ),
@@ -153,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                                 isCompleted: todo.isCompleted);
                             saveTodos();
                             Navigator.pop(
-                                context); // close the showModalBottomSheet widget
+                                buildContext); // close the showModalBottomSheet widget
                           });
                         },
                       )),
@@ -169,15 +168,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
-        Column(
-            children: userTodos.map<TodoWidget>((todo) {
+      children: userTodos.map<TodoWidget>((todo) {
           return TodoWidget(
               todo: todo,
               onMarkComplete: handleCompletion,
               onEditClick: handleEdit);
-        }).toList())
-      ],
+        }).toList(),
     );
   }
 }
