@@ -6,18 +6,19 @@ class TodoWidget extends StatelessWidget {
   final Todo todo;
   final Function(Todo, String, String) onEditClick;
   final Function(Todo) onMarkComplete;
-
+  final Function(Todo) onDelete;
 
   const TodoWidget({
     this.todo,
     this.onEditClick,
-    this.onMarkComplete}
-  );
+    this.onMarkComplete, 
+    this.onDelete 
+  });
 
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container( // Add the swipe stuff here
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         // color: Colors.red

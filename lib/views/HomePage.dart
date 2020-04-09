@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     loadTodos_TEST_MODE();
-    // loadTodos();
+    // loadTodos(); // This will work once shared_preference is set up.
   }
 
   void loadTodos_TEST_MODE() {
@@ -45,6 +45,15 @@ class _HomePageState extends State<HomePage> {
 
   void saveTodos() {
     print("saving todos from current state to shared_preference");
+  }
+
+  void handleDelete(Todo todo){
+    print("Deleting todo " + todo.title);
+    // Add deletion stuff here
+
+    setState(() {
+      // update usreTodos state
+    });
   }
 
   void handleCompletion(Todo todo) {
@@ -274,9 +283,11 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
       children: userTodos.map<TodoWidget>((todo) {
         return TodoWidget(
-          todo: todo,
-          onMarkComplete: handleCompletion,
-          onEditClick: handleEdit);
+            todo: todo,
+            onMarkComplete: handleCompletion,
+            onEditClick: handleEdit,
+            onDelete: handleDelete
+          );
         }).toList(),
       ),
       floatingActionButton: FloatingActionButton(
