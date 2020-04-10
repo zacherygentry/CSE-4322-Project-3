@@ -21,24 +21,32 @@ class SplashScreen extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "My To-Dos",
-                  style: TextStyle(fontSize: 32),
-                ),
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "My To-Dos",
+                      style: TextStyle(fontSize: 32),
+                    ),
+                  ),
+                  image,
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
               ),
-              image,
-              Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: CircularProgressIndicator(),
-              ),
-            ],
-          ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text('© Team <insert team name here>'),
+            ),
+          ],
         ),
       ),
     );
