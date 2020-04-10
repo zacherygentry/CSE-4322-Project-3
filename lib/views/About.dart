@@ -21,7 +21,7 @@ class About extends StatelessWidget {
                 Divider(),
                 AvatarWidget(
                   url:
-                      "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg",
+                      "https://avatars0.githubusercontent.com/u/14227467?s=460&u=72984784bcabeb3b04d180f59def2dc9f86bf4ac&v=4.jpg",
                   name: "Zachery Gentry",
                   role: "Project Manager",
                 ),
