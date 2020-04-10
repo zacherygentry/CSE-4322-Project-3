@@ -48,27 +48,29 @@ class _HomePageState extends State<HomePage> {
     List<String> todoStringList = prefs.getStringList('todos');
     // prefs.setStringList('todos', null);
 
-    if(todoStringList != null){
-      List<Todo> todoListJson = todoStringList.map((todoStr) => Todo.fromJson(json.decode(todoStr))).toList();
+    if (todoStringList != null) {
+      List<Todo> todoListJson = todoStringList
+          .map((todoStr) => Todo.fromJson(json.decode(todoStr)))
+          .toList();
       print("Getting todos");
       print(todoStringList);
       setState(() {
         userTodos = todoListJson;
       });
-    }else{
+    } else {
       print("No todos loaded");
     }
-
   }
 
   Future<void> saveTodos() async {
     print("saving todos from current state to shared_preference");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> todoStringList = userTodos.map((todo) => json.encode(todo.toJson())).toList();
+    List<String> todoStringList =
+        userTodos.map((todo) => json.encode(todo.toJson())).toList();
     prefs.setStringList('todos', todoStringList);
   }
 
-  void handleDelete(Todo todo) {
+  void handleDelete(Todo todo) async {
     print("Deleting todo " + todo.title);
     // Add deletion stuff here
 
@@ -76,6 +78,7 @@ class _HomePageState extends State<HomePage> {
       // update usreTodos state
       userTodos.remove(todo);
     });
+    await saveTodos();
   }
 
   void handleCompletion(Todo todo) {
