@@ -276,6 +276,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text(Constants.HOMEPAGE_TITLE)),
+      ),
       body: ListView(
         children: userTodos.map((todo) {
           return Dismissible(

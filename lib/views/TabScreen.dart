@@ -21,9 +21,6 @@ class TabScreenState extends State<TabScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: AppBar(
-          title: Text(Constants.HOMEPAGE_TITLE),
-        ),
         body: pages[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).primaryColor,
