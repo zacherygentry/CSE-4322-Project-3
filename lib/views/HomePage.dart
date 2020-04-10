@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list/constants.dart';
 // import 'package:todo_list/widgets/EditTodoWidget.dart';
 import 'package:todo_list/widgets/TodoWidget.dart';
@@ -15,8 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    loadTodos_TEST_MODE();
-    // loadTodos(); // This will work once shared_preference is set up.
+    // loadTodos_TEST_MODE();
+    loadTodos(); // This will work once shared_preference is set up.
   }
 
   void loadTodos_TEST_MODE() {
@@ -39,12 +42,30 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void loadTodos() {
+  Future<void> loadTodos() async {
     print("loading Todos from shared_preference to state");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> todoStringList = prefs.getStringList('todos');
+    // prefs.setStringList('todos', null);
+
+    if(todoStringList != null){
+      List<Todo> todoListJson = todoStringList.map((todoStr) => Todo.fromJson(json.decode(todoStr))).toList();
+      print("Getting todos");
+      print(todoStringList);
+      setState(() {
+        userTodos = todoListJson;
+      });
+    }else{
+      print("No todos loaded");
+    }
+
   }
 
-  void saveTodos() {
+  Future<void> saveTodos() async {
     print("saving todos from current state to shared_preference");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> todoStringList = userTodos.map((todo) => json.encode(todo.toJson())).toList();
+    prefs.setStringList('todos', todoStringList);
   }
 
   void handleDelete(Todo todo) {
@@ -309,7 +330,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  //   return
-  //   );
-  // }
 }
